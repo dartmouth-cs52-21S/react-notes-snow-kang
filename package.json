@@ -1,0 +1,23 @@
+{
+  "name": "starterpack",
+  "version": "1.0.0",
+  "description": "Frontend Starterpack Short Assignment",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dartmouth-cs52-21S/starterpack-snow-kang.git"
+  },
+  "author": "Snow",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dartmouth-cs52-21S/starterpack-snow-kang/issues"
+  },
+  "homepage": "https://github.com/dartmouth-cs52-21S/starterpack-snow-kang#readme",
+  "devDependencies": {
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
