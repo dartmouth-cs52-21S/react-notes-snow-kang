@@ -6,7 +6,7 @@
 "scripts": {
     "start": "SET NODE_ENV=development& webpack serve",
     "clean": "rimraf dist",
-    "build": "npm run clean& SET NODE_ENV=production& webpack --color"
+    "build": "npm run clean& SET NODE_ENV=production webpack --color"
   },
   "repository": {
     "type": "git",
