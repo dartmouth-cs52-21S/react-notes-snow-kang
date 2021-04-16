@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Frontend Starterpack Short Assignment",
   "main": "src/index.js",
-"scripts": {
+  "scripts": {
     "start": "SET NODE_ENV=development& webpack serve",
     "test": "eslint src",
     "build": "npm run clean; NODE_ENV=production webpack --color",
@@ -42,6 +42,7 @@
     "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
+    "webpack": "^5.33.2",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2"
   },
