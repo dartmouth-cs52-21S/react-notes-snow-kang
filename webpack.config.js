@@ -6,6 +6,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const postcssPresets = require('postcss-preset-env');
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
 const finalCSSLoader = (env === 'production') ? MiniCssExtractPlugin.loader : { loader: 'style-loader' };
 
@@ -57,13 +58,19 @@ module.exports = {
         ],
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/,
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        type: 'asset',
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: ImageMinimizerPlugin.loader,
             options: {
-              useRelativePath: true,
-              name: '[name].[ext]',
+              severityError: 'warning', // Ignore errors on corrupted images
+              minimizerOptions: {
+                plugins: ['gifsicle'],
+              },
             },
           },
         ],
