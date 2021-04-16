@@ -1,6 +1,6 @@
 # Frontend Starterpark - Short Assignment
 
-Created a simple webpack setup to deploy on Netlify. We started from scratch and went step by step through the process of installing all the libraries and dependencies needed, telling our config file how to handle each file . Through doing this assingment, I learned:
+Created a simple webpack setup to deploy on Netlify. We started from scratch and went step by step through the process of installing all the libraries and dependencies needed, telling our config file how to handle each file . Through doing this assignment, I learned:
 - Webpack bundles up all our dependencies that we listed in package.json. It understands JS but needs plugins to understand other languages like HTML, CSS
 - Plugins work at the bundle level and differ from Webpack loaders, which work at the file level to transform data (e.g. sass loader compiles SCSS to CSS)
 - Babel is a loader that transforms ES6+ JS to ES5 JS for browser compatibility 
@@ -19,7 +19,7 @@ I somehow missed installing one dependency and spent a lot of time trying to fix
 
 ## Extra Credit
 - Installed ImageMinimizerWebpackPlugin's loader for image optimization/compression
-- Made my dog a sun
+- Made my dog into a sun
 
 ## Screenshots
 - Coco.jpg used to be 52 bytes
