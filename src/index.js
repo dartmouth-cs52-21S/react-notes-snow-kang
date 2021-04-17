@@ -1,14 +1,7 @@
 import './style.scss';
-import $ from 'jquery';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-const counter = () => {
-  let num = 0;
-  $('#main').html(`You've been staring into Coco's eyes for ${num} seconds...<br>I don't blame you`);
+const App = () => <div className="test">All the REACT are belong to us!</div>;
 
-  setInterval(() => {
-    num += 1;
-    $('#main').html(`You've been staring into Coco's eyes for ${num} seconds...<br>I don't blame you`);
-  }, 1000);
-};
-
-counter();
+ReactDOM.render(<App />, document.getElementById('main'));
