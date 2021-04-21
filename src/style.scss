@@ -1,25 +1,69 @@
-body {
-  font-family: "Roboto", sans-serif;
-  background: purple;
-  text-align: center;
-}
+$OPTIONS_BACKGROUND_COLOR: sandybrown;
 
 * {
   padding: 0;
   margin: 0;
 }
 
+body {
+  font-family: "Roboto", sans-serif;
+  background: purple;
+  text-align: center;
+}
+
+h1 {
+  margin: 5vh;
+  color: white;
+}
+
 .note {
   position: absolute;
-  width: 20vw;
-  height: auto;
-  padding: 1vw;
   word-wrap: break-word;
   background-color: pink;
-  border-radius: 1em;
 }
 
 .options {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  height: 2em;
+  z-index: 0;
+  background-color: $OPTIONS_BACKGROUND_COLOR;
+
+  i {
+    z-index: 1;
+    padding: .5em;
+  }
+  
+  i:hover {
+    cursor: pointer;
+    background-color: darken( $OPTIONS_BACKGROUND_COLOR, 10% );
+  }
+
+  .draggable-area {
+    height: 100%;
+    flex-grow: 1;
+  }
+}
+
+.note-content {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+
+  textarea {
+    background: none;
+    border: none;
+    resize: none;
+    font-size: 1.2em;
+  }
+
+  textarea:focus-visible {
+    outline: none;
+  }
+
+  textarea:first-child {
+    text-align: center;
+    font-size: 2em;
+  }
 }
