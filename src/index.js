@@ -13,8 +13,8 @@ class App extends Component {
           title: 'testing',
           text: '![](http://i.giphy.com/gyRWkLSQVqlPi.gif)',
           x: 200,
-          y: 12,
-          zIndex: 10,
+          y: 0,
+          zIndex: 30,
         },
         1: {
           title: 'headings',
@@ -24,14 +24,26 @@ class App extends Component {
           zIndex: 20,
         },
       }),
-      integerCounter: 0,
+      integerCounter: 2,
+      newTitle: '',
     };
   }
 
-  addNote = (newNote) => {
+  updateTitle = (event) => {
+    this.setState({ newTitle: event.target.value });
+  }
+
+  addNote = () => {
     this.setState((prevState) => ({
-      notes: prevState.notes.set(prevState.integerCounter, newNote),
+      notes: prevState.notes.set(prevState.integerCounter, {
+        title: prevState.newTitle,
+        text: '',
+        x: 100,
+        y: 100,
+        zIndex: 20,
+      }),
       integerCounter: prevState.integerCounter + 1,
+      newTitle: '',
     }));
   }
 
@@ -52,6 +64,8 @@ class App extends Component {
   render() {
     return (
       <div className="container">
+        <input type="text" id="title" value={this.state.newTitle} onChange={this.updateTitle} />
+        <input type="button" onClick={this.addNote} id="submit-note" value="Add note" />
         {this.state.notes.entrySeq().map(([id, note]) => (
           <Note key={id}
             id={id}

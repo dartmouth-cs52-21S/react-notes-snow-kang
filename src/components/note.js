@@ -21,13 +21,11 @@ class Note extends Component {
   }
 
   onSectionFocus = (_) => {
-    console.log('focus test');
     this.setState({ isEditing: true });
   }
 
-  // Only update App parent once user is no longer selecting the note's contents
+  // Only update App parent once note is no longer in focus
   onSectionBlur = (_) => {
-    console.log('blur test');
     this.setState({ isEditing: false });
     this.props.onUpdate(this.props.id, { title: this.state.title, text: this.state.text });
   }
@@ -40,6 +38,7 @@ class Note extends Component {
     this.setState({ text: event.target.value });
   }
 
+  // Update
   renderNoteText = () => {
     if (this.state.isEditing) {
       return (
@@ -51,8 +50,8 @@ class Note extends Component {
     } else {
       return (
         <div className="note-content">
-          <TextareaAutosize onFocus={this.onSectionFocus} readOnly value={this.props.note.title} />
-          <TextareaAutosize onFocus={this.onSectionFocus} readOnly value={this.props.note.text} />
+          <TextareaAutosize onFocus={this.onSectionFocus} onChange={this.onTitleChange} value={this.props.note.title} />
+          <TextareaAutosize onFocus={this.onSectionFocus} onChange={this.onTextChange} value={this.props.note.text} />
         </div>
       );
     }
@@ -62,12 +61,13 @@ class Note extends Component {
     return (
       <Draggable
         handle=".draggable-area"
-        defaultPosition={{ x: 0, y: 0 }}
         position={{
           x: this.props.note.x,
           y: this.props.note.y,
         }}
         onDrag={this.handleDrag}
+        stack="div"
+        distance="0"
       >
         <div className="note">
           <div className="options">
