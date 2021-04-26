@@ -25,25 +25,21 @@ class App extends Component {
         },
       }),
       integerCounter: 2,
-      newTitle: '',
+      highestZIndex: 30,
     };
-  }
-
-  updateTitle = (event) => {
-    this.setState({ newTitle: event.target.value });
   }
 
   addNote = () => {
     this.setState((prevState) => ({
       notes: prevState.notes.set(prevState.integerCounter, {
-        title: prevState.newTitle,
+        title: '',
         text: '',
         x: 100,
         y: 100,
-        zIndex: 20,
+        zIndex: prevState.highestZIndex + 1,
       }),
       integerCounter: prevState.integerCounter + 1,
-      newTitle: '',
+      highestZIndex: prevState.highestZIndex + 1,
     }));
   }
 
@@ -61,6 +57,18 @@ class App extends Component {
     }));
   };
 
+  makeHighestZIndex = (id) => {
+    if (this.state.notes.get(id).zIndex < this.state.highestZIndex) {
+      const newHighest = this.state.highestZIndex + 1;
+      this.setState((prevState) => ({
+        notes: prevState.notes.update(id, (prevNote) => {
+          return { ...prevNote, ...{ zIndex: newHighest } };
+        }),
+        highestZIndex: newHighest,
+      }));
+    }
+  }
+
   render() {
     return (
       <div className="container">
@@ -71,7 +79,8 @@ class App extends Component {
             id={id}
             note={note}
             onDelete={this.deleteNote}
-            onUpdate={this.updateNote}
+            onUpdateNote={this.updateNote}
+            onUpdateZIndex={this.makeHighestZIndex}
           />
         ))}
       </div>
