@@ -1,4 +1,6 @@
-$OPTIONS_BACKGROUND_COLOR: sandybrown;
+$HEADER_HEIGHT: 100px;
+$OPTIONS_BACKGROUND_COLOR: white;
+$NOTE_WIDTH: 220px;
 
 * {
   padding: 0;
@@ -12,27 +14,85 @@ body {
   text-align: center;
 }
 
-#main-title {
-  margin: 5vh;
+/* width */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  margin: 15px;
+  box-shadow: inset 0 0 5px yellow;
+  border-radius: 1rem;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: yellow;
+  border-radius: 1rem;
+}
+
+.rotate {
+  transform: rotate(-90deg);
+  transform-origin: top left;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: $HEADER_HEIGHT;
+}
+
+.notes-boundary {
+  position: absolute;
+  top: $HEADER_HEIGHT;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: calc(100vh - #{$HEADER_HEIGHT});
 }
 
 .note.react-draggable {
   position: absolute;
   word-wrap: break-word;
-  width: 300px;
+  width: $NOTE_WIDTH;
+
+  .animal-header {
+    display: flex;
+
+    img {
+      width: $NOTE_WIDTH;
+    }
+  }
+
+  .note-author {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    height: 1rem;
+    width: calc(#{$HEADER_HEIGHT} * 2);
+  }
+  
 }
 
 .options {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 2em;
+  height: 3rem;
   z-index: 0;
   background-color: $OPTIONS_BACKGROUND_COLOR;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 
   i {
     z-index: 1;
-    padding: .5em;
+    padding: .5rem;
   }
   
   i:hover {
@@ -44,16 +104,20 @@ body {
     height: 100%;
     flex-grow: 1;
   }
+
+  .draggable-area:hover {
+    cursor: move;
+  }
 }
 
 .note-content {
   display: flex;
   flex-direction: column;
+  background-color: white;
 
   textarea {
-    background: none;
     resize: none;
-    font-size: 1.2em;
+    font-size: 1.2rem;
   }
 
   textarea:focus-visible {
@@ -62,16 +126,19 @@ body {
 
   .note-title {
     text-align: center;
-    font-size: 2em;
+    font-size: 1.2rem;
     background-color: yellow;
-    border-bottom-left-radius: 1em;
-    border-bottom-right-radius: 1em;
-    padding: 0 1em;
+    margin-bottom: 1rem;
   }
 
   .note-text {
-    min-height: 10em;
+    height: 200px;
     text-align: left;
+    background-color: darken( $OPTIONS_BACKGROUND_COLOR, 20% );
+    margin: 0 30px;
+    padding: 1rem;
+    border-radius: 1rem;
+    overflow-y: auto;
 
     * {
       margin: 0;

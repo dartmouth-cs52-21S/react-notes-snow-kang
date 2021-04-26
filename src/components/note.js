@@ -3,6 +3,8 @@ import Draggable from 'react-draggable';
 import TextareaAutosize from 'react-textarea-autosize';
 import ReactMarkdown from 'react-markdown';
 
+const polarheader = require('../img/polarheader.png');
+
 class Note extends Component {
   constructor(props) {
     super(props);
@@ -43,17 +45,20 @@ class Note extends Component {
     if (this.state.isEditingText) {
       return (
         <div className="note-content">
-          <TextareaAutosize className="note-text" autoFocus onBlur={this.onTextBlur} onChange={this.onTextChange} value={this.props.note.text} />
           <TextareaAutosize className="note-title" onChange={this.onTitleChange} value={this.props.note.title} />
+          {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
+          <textarea className="note-text" autoFocus onBlur={this.onTextBlur} onChange={this.onTextChange} value={this.props.note.text} />
+
         </div>
       );
     } else {
       return (
         <div className="note-content">
+
+          <TextareaAutosize className="note-title" onChange={this.onTitleChange} value={this.props.note.title} />
           <button type="button" className="note-text" onFocus={this.onTextFocus} onBlur={this.onTextBlur}>
             <ReactMarkdown>{this.props.note.text || ''}</ReactMarkdown>
           </button>
-          <TextareaAutosize className="note-title" onChange={this.onTitleChange} value={this.props.note.title} />
         </div>
       );
     }
@@ -71,13 +76,18 @@ class Note extends Component {
         onMouseDown={this.makeTopZIndex}
         stack="div"
         distance="0"
+        bounds="parent"
       >
         <div className="note" style={{ zIndex: this.props.note.zIndex }}>
+          <div className="animal-header">
+            <img src={polarheader} alt="Polar bear sticky note topper" />
+          </div>
+          {this.renderNoteText()}
           <div className="options">
             <span className="draggable-area" />
             <i onClick={this.handleDeleteClick} className="fas fa-times" role="button" tabIndex="0" label="Delete note" />
+            <p className="note-author rotate">testing</p>
           </div>
-          {this.renderNoteText()}
         </div>
       </Draggable>
     );
