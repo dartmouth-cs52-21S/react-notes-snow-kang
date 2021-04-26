@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Map } from 'immutable';
 import Note from './components/note';
+// import * as db from './services/datastore';
 
 class App extends Component {
   constructor(props) {
@@ -28,6 +29,12 @@ class App extends Component {
       highestZIndex: 30,
     };
   }
+
+  // componentDidMount() {
+  //   db.fetchNotes((notes) => {
+  //     this.setState({ notes: new Map(notes) });
+  //   });
+  // }
 
   addNote = () => {
     this.setState((prevState) => ({

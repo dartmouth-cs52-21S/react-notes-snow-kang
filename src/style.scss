@@ -3,23 +3,23 @@ $OPTIONS_BACKGROUND_COLOR: sandybrown;
 * {
   padding: 0;
   margin: 0;
+  border: none;
 }
 
 body {
   font-family: "Roboto", sans-serif;
-  background: purple;
+  background: pink;
   text-align: center;
 }
 
-h1 {
+#main-title {
   margin: 5vh;
-  color: white;
 }
 
-.note {
+.note.react-draggable {
   position: absolute;
   word-wrap: break-word;
-  background-color: pink;
+  width: 300px;
 }
 
 .options {
@@ -47,13 +47,11 @@ h1 {
 }
 
 .note-content {
-  padding: 1em;
   display: flex;
   flex-direction: column;
 
   textarea {
     background: none;
-    border: none;
     resize: none;
     font-size: 1.2em;
   }
@@ -62,9 +60,23 @@ h1 {
     outline: none;
   }
 
-  textarea:first-child {
+  .note-title {
     text-align: center;
     font-size: 2em;
     background-color: yellow;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+    padding: 0 1em;
+  }
+
+  .note-text {
+    min-height: 10em;
+    text-align: left;
+
+    * {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
   }
 }

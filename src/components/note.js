@@ -43,17 +43,17 @@ class Note extends Component {
     if (this.state.isEditingText) {
       return (
         <div className="note-content">
-          <TextareaAutosize onChange={this.onTitleChange} value={this.props.note.title} />
-          <TextareaAutosize autoFocus onBlur={this.onTextBlur} onChange={this.onTextChange} value={this.props.note.text} />
+          <TextareaAutosize className="note-text" autoFocus onBlur={this.onTextBlur} onChange={this.onTextChange} value={this.props.note.text} />
+          <TextareaAutosize className="note-title" onChange={this.onTitleChange} value={this.props.note.title} />
         </div>
       );
     } else {
       return (
         <div className="note-content">
-          <TextareaAutosize onChange={this.onTitleChange} value={this.props.note.title} />
-          <button type="button" onFocus={this.onTextFocus} onBlur={this.onTextBlur}>
+          <button type="button" className="note-text" onFocus={this.onTextFocus} onBlur={this.onTextBlur}>
             <ReactMarkdown>{this.props.note.text || ''}</ReactMarkdown>
           </button>
+          <TextareaAutosize className="note-title" onChange={this.onTitleChange} value={this.props.note.title} />
         </div>
       );
     }

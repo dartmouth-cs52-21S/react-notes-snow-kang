@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "firebase": "^8.4.2",
     "immutable": "*",
     "jquery": "^3.6.0",
     "lodash.debounce": "^4.0.8",
