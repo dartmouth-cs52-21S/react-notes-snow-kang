@@ -1,149 +1,320 @@
-$HEADER_HEIGHT: 100px;
-$OPTIONS_BACKGROUND_COLOR: white;
-$NOTE_WIDTH: 220px;
+$CONTAINER_WIDTH: 220px;
+$NOTE_WIDTH: calc(#{$CONTAINER_WIDTH} - 3rem);
+$OPTIONS_HEIGHT: 2rem;
+$PINKISH-WHITE: rgb(255, 235, 238);
+$LIGHT_PINK: rgb(255, 198, 198);
+$MEDIUM_PINK: rgb(236, 181, 189);
+$DARK_PINK: rgb(231, 162, 173);
+
+/* How to guarantee full view width w/o scrollbar width */
+$FULL_WIDTH: calc(100vw - (100vw - 100%));
 
 * {
-  padding: 0;
   margin: 0;
   border: none;
+  font-family: 'Open Sans', sans-serif;
 }
 
 body {
-  font-family: "Roboto", sans-serif;
-  background: pink;
+  font-family: 'Open Sans', sans-serif;
+  background: $DARK_PINK;
   text-align: center;
 }
 
-/* width */
-::-webkit-scrollbar {
-  width: 12px;
+h1 {
+  font-family: cursive;
+  font-weight: bolder;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  margin: 15px;
-  box-shadow: inset 0 0 5px yellow;
-  border-radius: 1rem;
+#backdrop {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: $FULL_WIDTH;
+  height: 100vh;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: yellow;
-  border-radius: 1rem;
-}
-
-.rotate {
-  transform: rotate(-90deg);
-  transform-origin: top left;
+.container {
+  display: flex;
+  flex-direction: column;
+  width: $FULL_WIDTH;
+  height: 100vh;
 }
 
 header {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-self: flex-end;
+  background-color: $MEDIUM_PINK;
+  height: 70px;
+  
+  > * {
+    margin: 0 1rem;
+  }
+}
+
+#main {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+#flowers {
+  max-width: 100%;
+}
+
+/* Sidebar for new note creation */ 
+.input-card {
+  display: flex;
+  flex: 0 1 10%;
   flex-direction: column;
-  justify-content: flex-end;
-  height: $HEADER_HEIGHT;
+  justify-content: flex-start;
+  margin-left: 2rem;
+  margin-bottom: 4rem;
+  background: $LIGHT_PINK;
+  background: linear-gradient(0deg, $PINKISH-WHITE 0%, $MEDIUM_PINK 65%, rgb(231, 162, 173, 0.1) 100%);
+  text-transform: uppercase;
+  color: $PINKISH-WHITE;
+
+  i {
+    padding: 1rem;
+  }
+
+  p:first-of-type {
+    font-family: 'Parisienne', cursive;
+    font-weight: bolder;
+    font-size: 2.8rem;
+    text-transform: lowercase;
+  }
 }
 
-.notes-boundary {
+.animal-headers {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+
+.notes-creator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  input[type=text] {
+    border: $LIGHT_PINK 2px solid;
+    height: 1.8rem;
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  input[type=button] {
+    margin-top: 1rem;
+    width: 100px;
+    text-transform: lowercase;
+    background-color: $LIGHT_PINK;
+
+    &:hover {
+      cursor: pointer;
+      background-color: white;
+    }
+  }
+}
+
+#logged-in-status {
+  font-size: 1.5em;
+  color: $PINKISH-WHITE;
+}
+
+#google-prompt {
+  height: 50px;
+  width: 120px;
+  cursor: pointer;
+  background-color: $PINKISH-WHITE;
+
+  &:hover {
+    background-color: white;
+    animation: pulse 2s;
+  }
+}
+
+// Accessibility friendly way to hide radio button
+input[type=radio] {
   position: absolute;
-  top: $HEADER_HEIGHT;
-  left: 0;
-  right: 0;
-  margin: auto;
-  height: calc(100vh - #{$HEADER_HEIGHT});
+  opacity: 0;
+  width: 0;
+  height: 0;
+
+  + img {
+    cursor: pointer;
+    height: 60px;
+    padding: 1rem;
+    border-radius: 1rem;
+
+    &:hover {
+      background: $MEDIUM_PINK;
+      animation: bounce 2s infinite;
+    }
+  }
 }
 
+input[type=radio]:checked + img {
+  background: $MEDIUM_PINK;
+}
+
+#notes-boundary {
+  position: relative;
+  width: 100%;
+  padding: 0.5rem 2rem;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  margin: 15px;
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $LIGHT_PINK;
+  border-radius: 1rem;
+}
+
+/* Note animal container */
 .note.react-draggable {
   position: absolute;
   word-wrap: break-word;
-  width: $NOTE_WIDTH;
+  width: $CONTAINER_WIDTH;
 
   .animal-header {
     display: flex;
 
     img {
-      width: $NOTE_WIDTH;
+      max-width: $CONTAINER_WIDTH;
+      max-height: calc(#{$CONTAINER_WIDTH} * 0.8);
+    }
+
+    &:hover {
+      cursor: move;
     }
   }
-
-  .note-author {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 100%;
-    height: 1rem;
-    width: calc(#{$HEADER_HEIGHT} * 2);
-  }
-  
 }
 
-.options {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 3rem;
-  z-index: 0;
-  background-color: $OPTIONS_BACKGROUND_COLOR;
-  border-bottom-left-radius: 1rem;
-  border-bottom-right-radius: 1rem;
-
-  i {
-    z-index: 1;
-    padding: .5rem;
-  }
-  
-  i:hover {
-    cursor: pointer;
-    background-color: darken( $OPTIONS_BACKGROUND_COLOR, 10% );
-  }
-
-  .draggable-area {
-    height: 100%;
-    flex-grow: 1;
-  }
-
-  .draggable-area:hover {
-    cursor: move;
-  }
-}
-
+/* Note body container -between the animal header and the author footer */
 .note-content {
   display: flex;
   flex-direction: column;
-  background-color: white;
+  align-items: center;
 
   textarea {
-    resize: none;
     font-size: 1.2rem;
-  }
+    height: $NOTE_WIDTH;
 
-  textarea:focus-visible {
-    outline: none;
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:first-child {
+      resize: none;
+    }
+
+    &:not(:first-child) {
+      resize: vertical;
+    }
   }
 
   .note-title {
     text-align: center;
+    max-width: $CONTAINER_WIDTH;
+    min-height: 1.5rem;
     font-size: 1.2rem;
-    background-color: yellow;
     margin-bottom: 1rem;
   }
 
   .note-text {
-    height: 200px;
-    text-align: left;
-    background-color: darken( $OPTIONS_BACKGROUND_COLOR, 20% );
-    margin: 0 30px;
-    padding: 1rem;
+    min-height: 3rem;
+    width: $NOTE_WIDTH;
+    padding: 0.5rem;
     border-radius: 1rem;
+    text-align: left;
+    overflow-x: hidden;
     overflow-y: auto;
+    cursor: text;
 
     * {
-      margin: 0;
-      padding: 0;
-      width: 100%;
+      max-width: calc(#{$NOTE_WIDTH} - 1rem);
     }
   }
+}
+
+/* Sideways options bar */
+.rotate {
+  transform: rotate(90deg) translateX(-1rem) translateY(.5rem); 
+  transform-origin: bottom right;
+}
+
+.options {
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: $NOTE_WIDTH;
+  height: $OPTIONS_HEIGHT;
+  margin-left: calc(#{$CONTAINER_WIDTH} - #{$NOTE_WIDTH});
+
+  i {
+    padding: .2rem .5rem ;
+    font-size: 2rem;
+    background-color: $LIGHT_PINK;
+    margin: .3rem;
+    border: solid 1px black;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $PINKISH-WHITE;
+    }
+  }
+}
+
+/* Icons to change animal header */
+.animal-icon {
+  height: 3rem;
+  width: 3rem;
+  display: block;
+
+  &:hover {
+    cursor: pointer;
+    animation: bounce 2s;
+  }
+}
+
+/* Author footer */
+.note-author {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: $CONTAINER_WIDTH;
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  font-style: italic;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1) };
+  100% { transform: scale(1); }
+}
+
+/* Boucne animation from https://codepen.io/webmantras/pen/azWJOB */
+@keyframes bounce {
+	0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+	40% {transform: translateY(-1em);}
+	60% {transform: translateY(-0.5em);}
 }

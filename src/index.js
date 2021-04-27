@@ -5,12 +5,21 @@ import { Map } from 'immutable';
 import Note from './components/note';
 import * as db from './services/datastore';
 
+const polarheader = require('./img/polarheader.png');
+const pandaheader = require('./img/pandaheader.png');
+const catheader = require('./img/catheader.png');
+const logo = require('./img/logo.png');
+const backdrop = require('./img/backdrop.jpg');
+const flowers = require('./img/flowers.png');
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       notes: new Map(),
       helpers: new Map(),
+      loggedInUser: 'anonymous',
+      currentAnimalHeader: 'polar',
     };
   }
 
@@ -24,8 +33,25 @@ class App extends Component {
     });
   }
 
+  googleSignInAndOut = () => {
+    if (this.state.loggedInUser !== 'anonymous') {
+      db.userLogout().then(() => {
+        this.state.loggedInUser = 'anonymous';
+        document.getElementById('logged-in-status').innerHTML = 'Currently posting as anonymous';
+        document.getElementById('google-prompt').value = 'Click to sign in!';
+      }).catch((err) => console.log(err));
+    } else {
+      db.userLogin().then((result) => {
+        const { displayName } = result.user;
+        this.state.loggedInUser = displayName;
+        document.getElementById('logged-in-status').innerHTML = `Hello, ${displayName}!`;
+        document.getElementById('google-prompt').value = 'Sign out';
+      }).catch((err) => { console.log(err); });
+    }
+  }
+
   addNote = () => {
-    // Cross browser solution to getting window width from w3schools
+    // Cross browser solution to getting window dimensions from w3schools
     const w = window.innerWidth
       || document.documentElement.clientWidth
       || document.body.clientWidth;
@@ -34,20 +60,20 @@ class App extends Component {
       || document.documentElement.clientHeight
       || document.body.clientHeight;
 
-    // TODO: AUTHENTICATION , get user id using method in datastore
-
     const newNote = {
       title: document.getElementById('new-title').value || '',
       text: '',
       x: Math.floor(Math.random() * w * 0.3) + 20,
       y: Math.floor(Math.random() * h * 0.3) + 20,
       zIndex: -1,
+      createdBy: this.state.loggedInUser,
+      animalHeader: this.state.currentAnimalHeader,
     };
 
     db.addNote(newNote).then((ref) => {
       this.placeNoteOnTop(ref.key);
       document.getElementById('new-title').value = ''; // Reset title input bar after note creation
-    });
+    }).catch((err) => { console.log(err); });
   }
 
   deleteNote = (id) => {
@@ -56,7 +82,7 @@ class App extends Component {
       if (this.state.notes.size === 0) {
         db.deleteHelper('highestZIndex');
       }
-    });
+    }).catch((err) => { console.log(err); });
   }
 
   updateNote = (id, newNoteProperties) => {
@@ -76,26 +102,69 @@ class App extends Component {
     }
   }
 
+  updateAnimalHeader = (newAnimalHeader) => {
+    this.state.currentAnimalHeader = newAnimalHeader;
+  }
+
   render() {
+    let msg;
+    if (this.state.loggedInUser === 'anonymous') {
+      msg = 'Currently posting as anonymous';
+    } else {
+      msg = `Hello, ${this.state.loggedInUser}!`;
+    }
     return (
       <div className="container">
+        <img id="backdrop" src={backdrop} alt="Cloud background" />
         <header>
-          <h1 id="main-title">Snow&apos;s Notes</h1>
-          <div className="notes-creator">
-            <input type="text" id="new-title" />
-            <input type="button" onClick={this.addNote} id="submit-note" value="Add note" />
-          </div>
+          <div id="logged-in-status">{(msg)}</div>
+          <input type="button"
+            id="google-prompt"
+            onClick={this.googleSignInAndOut}
+            value={this.state.loggedInUser === 'anonymous'
+              ? 'Click to sign in!'
+              : 'Sign out'}
+          />
         </header>
-        <div className="notes-boundary">
-          {this.state.notes.entrySeq().map(([id, note]) => (
-            <Note key={id}
-              id={id}
-              note={note}
-              onDelete={this.deleteNote}
-              onUpdateNote={this.updateNote}
-              onUpdateZIndex={this.placeNoteOnTop}
-            />
-          ))}
+
+        <div id="main">
+          <div className="input-card">
+            <img src={flowers} alt="Flower border" id="flowers" />
+            <img src={logo} alt="Snow's Notes Logo" id="logo" />
+            <i className="far fa-heart" />
+            <p>✨manifest✨</p>
+            <p>your wildest dreams!</p>
+            <div className="animal-headers">
+              <label htmlFor="polar">
+                <input type="radio" name="animal-header" onClick={() => this.updateAnimalHeader('polar')} value="polar" id="polar" defaultChecked />
+                <img src={polarheader} alt="Polar bear header" />
+              </label>
+              <label htmlFor="panda">
+                <input type="radio" name="animal-header" onClick={() => this.updateAnimalHeader('panda')} value="panda" id="panda" />
+                <img src={pandaheader} alt="Panda bear header" />
+              </label>
+              <label htmlFor="cat">
+                <input type="radio" name="animal-header" onClick={() => this.updateAnimalHeader('cat')} value="cat" id="cat" />
+                <img src={catheader} alt="Cat bear header" />
+              </label>
+            </div>
+            <div className="notes-creator">
+              <input type="text" id="new-title" />
+              <input type="button" onClick={this.addNote} id="submit-note" value="Add note" />
+            </div>
+          </div>
+
+          <div id="notes-boundary">
+            {this.state.notes.entrySeq().map(([id, note]) => (
+              <Note key={id}
+                id={id}
+                note={note}
+                onDelete={this.deleteNote}
+                onUpdateNote={this.updateNote}
+                onUpdateZIndex={this.placeNoteOnTop}
+              />
+            ))}
+          </div>
         </div>
       </div>
     );

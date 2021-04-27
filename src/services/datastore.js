@@ -9,12 +9,15 @@ const config = {
 };
 firebase.initializeApp(config);
 
-// Get a reference to the database service
 const database = firebase.database();
 const provider = new firebase.auth.GoogleAuthProvider();
 
 export function userLogin() {
   return firebase.auth().signInWithPopup(provider);
+}
+
+export function userLogout() {
+  return firebase.auth().signOut();
 }
 
 export function fetchNotes(callback) {
@@ -39,12 +42,12 @@ export function updateNote(id, newNoteProperties) {
   }
 }
 
-export function deleteNote(id) {
-  return database.ref('notes').child(id).remove();
-}
-
 export function addNote(newNote) {
   return database.ref('notes').push(newNote);
+}
+
+export function deleteNote(id) {
+  return database.ref('notes').child(id).remove();
 }
 
 export function updateHelper(newHelperProperties) {
