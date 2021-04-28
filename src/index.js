@@ -168,14 +168,22 @@ class App extends Component {
       <div className="container">
         <img id="backdrop" src={backdrop} alt="Cloud background" />
         <header>
-          <div id="logged-in-status">{(msg)}</div>
-          <input type="button"
-            id="google-prompt"
-            onClick={this.googleSignInAndOut}
-            value={this.state.loggedInUser === 'anonymous'
-              ? 'Click to sign in!'
-              : 'Sign out'}
-          />
+          <div id="online-users">
+            <span>who else is online...</span>
+            {this.state.users.entrySeq().map(([id, user]) => (
+              <span key={id} className="online-user">{user.displayName[0]}</span>
+            ))}
+          </div>
+          <div id="login-process">
+            <div id="logged-in-status">{(msg)}</div>
+            <input type="button"
+              id="google-prompt"
+              onClick={this.googleSignInAndOut}
+              value={this.state.loggedInUser === 'anonymous'
+                ? 'Click to sign in!'
+                : 'Sign out'}
+            />
+          </div>
         </header>
 
         <div id="main">
@@ -214,11 +222,6 @@ class App extends Component {
                 onUpdateNote={this.updateNote}
                 onUpdateZIndex={this.placeNoteOnTop}
               />
-            ))}
-          </div>
-          <div id="users-boundary">
-            {this.state.users.entrySeq().map(([id, user]) => (
-              <div key={id}>{user.displayName}</div>
             ))}
           </div>
         </div>

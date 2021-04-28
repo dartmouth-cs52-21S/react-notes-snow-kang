@@ -38,21 +38,40 @@ body {
 
 header {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   align-self: flex-end;
-  background-color: $MEDIUM_PINK;
-  height: 4rem;
-  
+}
+
+#online-users {
+  display: flex;
+  align-items: center;
+
   > * {
-    margin: 0 1rem;
+    margin-right: .5em;
   }
+}
+
+.online-user {
+  background-color: $PINKISH-WHITE;
+  color: $DARK_PINK;
+  border: 2px solid $DARK_PINK;
+  font-size: 2em;
+  text-transform: lowercase;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+}
+
+#login-process {
+  display: flex;
+  background-color: $MEDIUM_PINK;
+  padding: 1em 2.5em;
 }
 
 #logged-in-status {
   font-size: 1.5rem;
   color: $PINKISH-WHITE;
+  margin-right: 1.5em;
 }
 
 #google-prompt {
