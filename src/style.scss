@@ -20,15 +20,6 @@ body {
   text-align: center;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 12px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: $LIGHT_PINK;
-}
-
 h1 {
   font-family: cursive;
   font-weight: bolder;
@@ -228,6 +219,9 @@ input[type=radio]:checked + img {
     min-height: 1.5rem;
     font-size: 1.2rem;
     margin-bottom: 1rem;
+    margin: 1rem;
+    overflow: hidden;
+    padding: 0;
   }
 
   .note-text {
