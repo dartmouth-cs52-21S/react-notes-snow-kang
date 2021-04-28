@@ -33,21 +33,25 @@ class App extends Component {
 
     // check if user is already signed in upon page load
     db.auth.onAuthStateChanged((user) => {
+      let displayName = this.state.loggedInUser;
+
       if (user) {
-        this.setState({ loggedInUser: user.displayName });
+        displayName = user.displayName;
+        this.setState({ loggedInUser: displayName });
       }
+
+      const newUser = {
+        displayName,
+        x: '',
+        y: '',
+      };
+
+      db.addUser(newUser).then((ref) => {
+        this.state.userKey = ref.key;
+      });
     });
 
     // create new online user object and add to users
-    const newUser = {
-      displayName: this.state.loggedInUser,
-      x: '',
-      y: '',
-    };
-
-    db.addUser(newUser).then((ref) => {
-      this.state.userKey = ref.key;
-    });
 
     db.fetchNotes((notes) => {
       this.setState({ notes: new Map(notes) });

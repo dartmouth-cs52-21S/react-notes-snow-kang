@@ -19,6 +19,7 @@
 - Each animal also has a crown that serves as a toggle button to collapse the text and just see the title and author
 - Text body autoresizes to fit to text on display. While editing, text body expands and is resizable via the bottom right corner. Markdown is supported
 - Google authentication with "created by" portion in each note. When you are not logged in, your posts are signed as anonymous
+- Online users in header with the first letter of each user currently on site
 - Animations on sidebar icons and animal topper images
 - When interacting with any note, it is assigned the highest z-index
 - When all notes have been deleted, the z-index counter is reset and the first new note will have z-index 0 again
