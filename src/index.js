@@ -68,6 +68,7 @@ class App extends Component {
       zIndex: -1,
       createdBy: this.state.loggedInUser,
       animalHeader: this.state.currentAnimalHeader,
+      collapsed: false,
     };
 
     db.addNote(newNote).then((ref) => {

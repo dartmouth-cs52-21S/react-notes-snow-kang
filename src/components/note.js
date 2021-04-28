@@ -35,6 +35,10 @@ class Note extends Component {
     this.props.onUpdateNote(this.props.id, { animalHeader: newAnimalHeader });
   }
 
+  handleDisplayToggle = () => {
+    this.props.onUpdateNote(this.props.id, { collapsed: !this.props.note.collapsed });
+  }
+
   onTextFocus = (_) => {
     this.setState({ isEditingText: true });
   }
@@ -68,6 +72,11 @@ class Note extends Component {
   }
 
   renderNoteText = (animalColor, scarfColor, scarfFontColor, textBackgroundColor, textFontColor) => {
+    let displaySetting = 'block';
+    if (this.props.note.collapsed) {
+      displaySetting = 'none';
+    }
+
     if (this.state.isEditingText) {
       return (
         <div className="note-content" style={{ backgroundColor: animalColor }}>
@@ -77,7 +86,7 @@ class Note extends Component {
             value={this.props.note.title}
           />
           <textarea className="note-text"
-            style={{ backgroundColor: textBackgroundColor, color: textFontColor }}
+            style={{ backgroundColor: textBackgroundColor, color: textFontColor, display: displaySetting }}
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
             onBlur={this.onTextBlur}
@@ -97,7 +106,7 @@ class Note extends Component {
           />
           <button type="button"
             className="note-text"
-            style={{ backgroundColor: textBackgroundColor, color: textFontColor }}
+            style={{ backgroundColor: textBackgroundColor, color: textFontColor, display: displaySetting }}
             onFocus={this.onTextFocus}
             onBlur={this.onTextBlur}
           >
@@ -145,15 +154,19 @@ class Note extends Component {
         }}
         onDrag={this.handleDrag}
         onMouseDown={this.makeTopZIndex}
-        bounds="parent"
+        bounds={{
+          left: 0,
+          top: 0,
+        }}
       >
         <div className="note" style={{ zIndex: this.props.note.zIndex }}>
+          <i onClick={this.handleDisplayToggle} className="fas fa-crown" id="display-toggle" role="button" tabIndex="0" label="Toggle display" />
           <div className="animal-header">
             {this.renderAnimalHeader()}
           </div>
           {this.renderNoteText(animalColor, scarfColor, scarfFontColor, textBackgroundColor, textFontColor)}
           <div className="options rotate">
-            <i onClick={this.handleDeleteClick} className="fas fa-times" role="button" tabIndex="0" label="Delete note" />
+            <i onClick={this.handleDeleteClick} className="fas fa-times" role="button" tabIndex="0" label="Delete node" />
             <img onClick={() => { this.handleAnimalHeaderClick('polar'); }} className="animal-icon" src={polaricon} alt="Change animal header to polar bear" />
             <img onClick={() => { this.handleAnimalHeaderClick('panda'); }} className="animal-icon" src={pandaicon} alt="Change animal header to panda bear" />
             <img onClick={() => { this.handleAnimalHeaderClick('cat'); }} className="animal-icon" src={caticon} alt="Change animal header to cat" />

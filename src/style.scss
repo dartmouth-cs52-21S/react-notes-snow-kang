@@ -21,6 +21,21 @@ body {
   text-align: center;
 }
 
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  margin: 15px;
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $LIGHT_PINK;
+  border-radius: 1rem;
+}
+
 h1 {
   font-family: cursive;
   font-weight: bolder;
@@ -56,73 +71,6 @@ header {
   }
 }
 
-#main {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-}
-
-#flowers {
-  max-width: 100%;
-}
-
-/* Sidebar for new note creation */ 
-.input-card {
-  display: flex;
-  flex: 0 1 10%;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin-left: 2rem;
-  margin-bottom: 4rem;
-  background: $LIGHT_PINK;
-  background: linear-gradient(0deg, $PINKISH-WHITE 0%, $MEDIUM_PINK 65%, rgb(231, 162, 173, 0.1) 100%);
-  text-transform: uppercase;
-  color: $PINKISH-WHITE;
-
-  i {
-    padding: 1rem;
-  }
-
-  p:first-of-type {
-    font-family: 'Parisienne', cursive;
-    font-weight: bolder;
-    font-size: 2.8rem;
-    text-transform: lowercase;
-  }
-}
-
-.animal-headers {
-  display: flex;
-  flex-direction: column;
-  padding: 1em;
-}
-
-.notes-creator {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  input[type=text] {
-    border: $LIGHT_PINK 2px solid;
-    height: 1.8rem;
-    &:focus-visible {
-      outline: none;
-    }
-  }
-
-  input[type=button] {
-    margin-top: 1rem;
-    width: 100px;
-    text-transform: lowercase;
-    background-color: $LIGHT_PINK;
-
-    &:hover {
-      cursor: pointer;
-      background-color: white;
-    }
-  }
-}
-
 #logged-in-status {
   font-size: 1.5em;
   color: $PINKISH-WHITE;
@@ -136,10 +84,78 @@ header {
 
   &:hover {
     background-color: white;
-    animation: pulse 2s;
+    animation: pulse 2s infinite;
   }
 }
 
+#main {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+#flowers, #logo {
+  width: 100%;
+}
+
+/* Sidebar for new note creation */ 
+.input-card {
+  display: flex;
+  flex: 0 1 10%;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: 2rem;
+  margin-bottom: 100px;
+  height: 750px;
+  background: $LIGHT_PINK;
+  background: linear-gradient(0deg, $PINKISH-WHITE 0%, $MEDIUM_PINK 65%, rgb(231, 162, 173, 0.1) 100%);
+  text-transform: uppercase;
+  color: $PINKISH-WHITE;
+
+  p:first-of-type {
+    font-family: 'Parisienne', cursive;
+    font-weight: bolder;
+    font-size: 3rem;
+    text-transform: lowercase;
+  }
+}
+
+.notes-creator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  input[type=text] {
+    border: $LIGHT_PINK 2px solid;
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  input[type=button] {
+    margin-top: 1rem;
+    width: 100px;
+    font-size: 1.2rem;
+    text-transform: lowercase;
+    background-color: $DARK_PINK;
+    color: $PINKISH-WHITE;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $MEDIUM_PINK;
+      width: 120px;
+      transition: all ease 0.2s;
+    }
+  }
+}
+
+.animal-headers {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+/* Animal topper selection for note creation */
 // Accessibility friendly way to hide radio button
 input[type=radio] {
   position: absolute;
@@ -149,40 +165,25 @@ input[type=radio] {
 
   + img {
     cursor: pointer;
-    height: 60px;
+    height: 80px;
     padding: 1rem;
     border-radius: 1rem;
 
     &:hover {
-      background: $MEDIUM_PINK;
+      background: $DARK_PINK;
       animation: bounce 2s infinite;
     }
   }
 }
 
 input[type=radio]:checked + img {
-  background: $MEDIUM_PINK;
+  background: $DARK_PINK;
 }
 
 #notes-boundary {
   position: relative;
   width: 100%;
   padding: 0.5rem 2rem;
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 12px;
-}
-
-::-webkit-scrollbar-track {
-  margin: 15px;
-  border-radius: 1rem;
-}
-
-::-webkit-scrollbar-thumb {
-  background: $LIGHT_PINK;
-  border-radius: 1rem;
 }
 
 /* Note animal container */
@@ -223,14 +224,14 @@ input[type=radio]:checked + img {
       resize: none;
     }
 
-    &:not(:first-child) {
+    &:nth-child(2) {
       resize: vertical;
     }
   }
 
   .note-title {
     text-align: center;
-    max-width: $CONTAINER_WIDTH;
+    width: $CONTAINER_WIDTH;
     min-height: 1.5rem;
     font-size: 1.2rem;
     margin-bottom: 1rem;
@@ -254,8 +255,21 @@ input[type=radio]:checked + img {
 
 /* Sideways options bar */
 .rotate {
-  transform: rotate(90deg) translateX(-1rem) translateY(.5rem); 
+  transform: rotate(90deg) translateX(-1rem) translateY(-.5rem); 
   transform-origin: bottom right;
+}
+
+#display-toggle {
+  position: absolute;
+  top: 0;
+  font-size: 3rem;
+  color: rgb(192, 40, 66);
+  left: calc(#{$CONTAINER_WIDTH} / 2.7);
+  
+  &:hover {
+    cursor: pointer;
+    animation: bounce 2s infinite;
+  }
 }
 
 .options {
