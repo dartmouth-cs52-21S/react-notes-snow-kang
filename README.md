@@ -2,7 +2,7 @@
 
 *Snow's Notes*: a cute way to take notes with animal toppers and lots and lots of pink :)
 
-[deployed url](https://jovial-jennings-2f0b27.netlify.app/)
+[deployed url](https://snowxnote.netlify.app/)
 
 ## What Worked Well
 - The animal headers went a lot more smoothly than I had anticipated. After I drew the first animal header, the other ones were really easy to make by just slightly redrawing the facial expression and changing the ears, while keeping the body dimensions the same so that they fit on the note. 
