@@ -41,17 +41,16 @@ class App extends Component {
         this.setState({ loggedInUser: displayName });
       }
 
+      // create new online user object once and add to users
       if (!userAddedToDb) {
         const newUser = { displayName };
 
         db.addUser(newUser).then((ref) => {
-          this.state.userKey = ref.key;
+          this.setState({ userKey: ref.key });
         });
         userAddedToDb = true;
       }
     });
-
-    // create new online user object and add to users
 
     db.fetchNotes((notes) => {
       this.setState({ notes: new Map(notes) });
@@ -80,7 +79,7 @@ class App extends Component {
   googleSignInAndOut = () => {
     if (this.state.loggedInUser !== 'anonymous') {
       db.userLogout().then(() => {
-        this.state.loggedInUser = 'anonymous';
+        this.setState({ loggedInUser: 'anonymous' });
         document.getElementById('logged-in-status').innerHTML = 'Currently posting as anonymous';
         document.getElementById('google-prompt').value = 'Click to sign in!';
         db.updateUser(this.state.userKey, { displayName: 'anonymous' });
@@ -88,7 +87,7 @@ class App extends Component {
     } else {
       db.userLogin().then((result) => {
         const { displayName } = result.user;
-        this.state.loggedInUser = displayName;
+        this.setState({ loggedInUser: displayName });
         document.getElementById('logged-in-status').innerHTML = `Hello, ${displayName}!`;
         document.getElementById('google-prompt').value = 'Sign out';
         db.updateUser(this.state.userKey, { displayName });
