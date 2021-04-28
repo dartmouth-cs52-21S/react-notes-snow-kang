@@ -36,9 +36,21 @@ class App extends Component {
     // check if user is already signed in upon page load
     db.auth.onAuthStateChanged((user) => {
       let displayName = this.state.loggedInUser;
+
+      // if user logs in/out, update user icon and display name
       if (user) {
         displayName = user.displayName;
         this.setState({ loggedInUser: displayName });
+
+        if (this.state.userKey) {
+          db.updateUser(this.state.userKey, { displayName });
+        }
+        document.getElementById('logged-in-status').innerHTML = `Hello, ${displayName}!`;
+        document.getElementById('google-prompt').value = 'Sign out';
+      } else if (this.state.userKey) {
+        db.updateUser(this.state.userKey, { displayName: 'anonymous' });
+        document.getElementById('logged-in-status').innerHTML = 'Currently posting as anonymous';
+        document.getElementById('google-prompt').value = 'Click to sign in!';
       }
 
       // create new online user object once and add to users
@@ -162,6 +174,8 @@ class App extends Component {
 
   render() {
     let msg;
+    const identifierColor = 'purple';
+
     if (this.state.loggedInUser === 'anonymous') {
       msg = 'Currently posting as anonymous';
     } else {
@@ -174,7 +188,7 @@ class App extends Component {
           <div id="online-users">
             <p>who&apos;s online:</p>
             {this.state.users.entrySeq().map(([id, user]) => (
-              <span key={id} className="online-user">{user.displayName[0]}</span>
+              <span key={id} id={id} className="online-user" style={{ backgroundColor: (id === this.state.userKey) ? identifierColor : 'null' }}>{user.displayName[0]} </span>
             ))}
           </div>
           <div id="login-process">
