@@ -18,12 +18,37 @@ class App extends Component {
     this.state = {
       notes: new Map(),
       helpers: new Map(),
+      users: new Map(),
+      userKey: '',
       loggedInUser: 'anonymous',
       currentAnimalHeader: 'polar',
     };
   }
 
   componentDidMount() {
+    /* handle cleanup for page refreshes
+      https://stackoverflow.com/questions/39084924/componentwillunmount-not-being-called-when-refreshing-the-current-page
+    */
+    window.addEventListener('beforeunload', this.componentCleanup);
+
+    // check if user is already signed in upon page load
+    db.auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ loggedInUser: user.displayName });
+      }
+    });
+
+    // create new online user object and add to users
+    const newUser = {
+      displayName: this.state.loggedInUser,
+      x: '',
+      y: '',
+    };
+
+    db.addUser(newUser).then((ref) => {
+      this.state.userKey = ref.key;
+    });
+
     db.fetchNotes((notes) => {
       this.setState({ notes: new Map(notes) });
     });
@@ -32,12 +57,20 @@ class App extends Component {
       this.setState({ helpers: new Map(helpers) });
     });
 
-    // check if user is already signed in upon page load
-    db.auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({ loggedInUser: user.displayName });
-      }
+    db.fetchUsers((users) => {
+      this.setState({ users: new Map(users) });
     });
+  }
+
+  // remove the event handler for normal unmounting
+  componentWillUnmount() {
+    this.componentCleanup();
+    window.removeEventListener('beforeunload', this.componentCleanup);
+  }
+
+  // run when the component is unmounted or page refreshes
+  componentCleanup = () => {
+    db.deleteUser(this.state.userKey);
   }
 
   googleSignInAndOut = () => {
@@ -46,6 +79,7 @@ class App extends Component {
         this.state.loggedInUser = 'anonymous';
         document.getElementById('logged-in-status').innerHTML = 'Currently posting as anonymous';
         document.getElementById('google-prompt').value = 'Click to sign in!';
+        db.updateUser(this.state.userKey, { displayName: 'anonymous' });
       }).catch((err) => console.log(err));
     } else {
       db.userLogin().then((result) => {
@@ -53,9 +87,18 @@ class App extends Component {
         this.state.loggedInUser = displayName;
         document.getElementById('logged-in-status').innerHTML = `Hello, ${displayName}!`;
         document.getElementById('google-prompt').value = 'Sign out';
+        db.updateUser(this.state.userKey, { displayName });
       }).catch((err) => { console.log(err); });
     }
   }
+
+  deleteUser = (id) => {
+    db.deleteUser(id);
+  }
+
+  updateNote = (id, newUserProperties) => {
+    db.updateUser(id, newUserProperties);
+  };
 
   addNote = () => {
     // Cross browser solution to getting window dimensions from w3schools
@@ -171,6 +214,11 @@ class App extends Component {
                 onUpdateNote={this.updateNote}
                 onUpdateZIndex={this.placeNoteOnTop}
               />
+            ))}
+          </div>
+          <div id="users-boundary">
+            {this.state.users.entrySeq().map(([id, user]) => (
+              <div key={id}>{user.displayName}</div>
             ))}
           </div>
         </div>

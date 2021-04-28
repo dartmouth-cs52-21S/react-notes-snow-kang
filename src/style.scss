@@ -20,11 +20,6 @@ body {
   text-align: center;
 }
 
-h1 {
-  font-family: cursive;
-  font-weight: bolder;
-}
-
 #backdrop {
   position: fixed;
   z-index: -1;
@@ -48,7 +43,7 @@ header {
   align-items: center;
   align-self: flex-end;
   background-color: $MEDIUM_PINK;
-  height: 70px;
+  height: 4rem;
   
   > * {
     margin: 0 1rem;
@@ -56,12 +51,12 @@ header {
 }
 
 #logged-in-status {
-  font-size: 1.5em;
+  font-size: 1.5rem;
   color: $PINKISH-WHITE;
 }
 
 #google-prompt {
-  height: 50px;
+  padding: 0.5rem;
   width: 120px;
   cursor: pointer;
   background-color: $PINKISH-WHITE;
@@ -110,6 +105,8 @@ header {
   align-items: center;
 
   input[type=text] {
+    height: 2rem;
+    width: 70%;
     border: $LIGHT_PINK 2px solid;
     height: 2rem;
     width: 70%;
@@ -151,7 +148,7 @@ input[type=radio] {
 
   + img {
     cursor: pointer;
-    height: 80px;
+    height: 70px;
     padding: 1rem;
     border-radius: 1rem;
 

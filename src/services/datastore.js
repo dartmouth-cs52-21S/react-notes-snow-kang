@@ -36,6 +36,13 @@ export function fetchHelpers(callback) {
   });
 }
 
+export function fetchUsers(callback) {
+  database.ref('users').on('value', (snapshot) => {
+    const newUsersState = snapshot.val();
+    callback(newUsersState);
+  });
+}
+
 export function updateNote(id, newNoteProperties) {
   if ('zIndex' in newNoteProperties) {
     database.ref('notes').child(id).update({ zIndex: newNoteProperties.zIndex });
@@ -58,4 +65,16 @@ export function updateHelper(newHelperProperties) {
 
 export function deleteHelper(helper) {
   database.ref('helpers').child(helper).remove();
+}
+export function addUser(newUser) {
+  return database.ref('users').push(newUser);
+}
+
+export function updateUser(id, newUserProperties) {
+  database.ref('users').child(id).update(newUserProperties);
+}
+
+export function deleteUser(id) {
+  console.log(id);
+  return database.ref('users').child(id).remove();
 }
