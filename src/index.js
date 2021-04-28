@@ -31,24 +31,24 @@ class App extends Component {
     */
     window.addEventListener('beforeunload', this.componentCleanup);
 
+    let userAddedToDb = false;
+
     // check if user is already signed in upon page load
     db.auth.onAuthStateChanged((user) => {
       let displayName = this.state.loggedInUser;
-
       if (user) {
         displayName = user.displayName;
         this.setState({ loggedInUser: displayName });
       }
 
-      const newUser = {
-        displayName,
-        x: '',
-        y: '',
-      };
+      if (!userAddedToDb) {
+        const newUser = { displayName };
 
-      db.addUser(newUser).then((ref) => {
-        this.state.userKey = ref.key;
-      });
+        db.addUser(newUser).then((ref) => {
+          this.state.userKey = ref.key;
+        });
+        userAddedToDb = true;
+      }
     });
 
     // create new online user object and add to users
@@ -173,7 +173,7 @@ class App extends Component {
         <img id="backdrop" src={backdrop} alt="Cloud background" />
         <header>
           <div id="online-users">
-            <span>who else is online...</span>
+            <p>who&apos;s online:</p>
             {this.state.users.entrySeq().map(([id, user]) => (
               <span key={id} className="online-user">{user.displayName[0]}</span>
             ))}

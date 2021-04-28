@@ -45,10 +45,16 @@ header {
 #online-users {
   display: flex;
   align-items: center;
-  font-family: 'Parisienne', cursive;
 
   > * {
     margin-right: .5em;
+  }
+
+  p {
+    font-family: 'Parisienne', cursive;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: rgb(211, 124, 138);
   }
 }
 
