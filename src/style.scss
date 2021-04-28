@@ -17,7 +17,6 @@ $FULL_WIDTH: calc(100vw - (100vw - 100%));
 
 body {
   font-family: 'Open Sans', sans-serif;
-  background: $DARK_PINK;
   text-align: center;
 }
 
@@ -26,14 +25,8 @@ body {
   width: 12px;
 }
 
-::-webkit-scrollbar-track {
-  margin: 15px;
-  border-radius: 1rem;
-}
-
 ::-webkit-scrollbar-thumb {
   background: $LIGHT_PINK;
-  border-radius: 1rem;
 }
 
 h1 {
@@ -241,7 +234,6 @@ input[type=radio]:checked + img {
     min-height: 3rem;
     width: $NOTE_WIDTH;
     padding: 0.5rem;
-    border-radius: 1rem;
     text-align: left;
     overflow-x: hidden;
     overflow-y: auto;
