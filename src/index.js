@@ -31,6 +31,13 @@ class App extends Component {
     db.fetchHelpers((helpers) => {
       this.setState({ helpers: new Map(helpers) });
     });
+
+    // check if user is already signed in upon page load
+    db.auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ loggedInUser: user.displayName });
+      }
+    });
   }
 
   googleSignInAndOut = () => {
@@ -150,7 +157,7 @@ class App extends Component {
               </label>
             </div>
             <div className="notes-creator">
-              <input type="text" id="new-title" />
+              <input type="text" id="new-title" placeholder="Input title here!" />
               <input type="button" onClick={this.addNote} id="submit-note" value="Add note" />
             </div>
           </div>

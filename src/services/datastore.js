@@ -12,12 +12,14 @@ firebase.initializeApp(config);
 const database = firebase.database();
 const provider = new firebase.auth.GoogleAuthProvider();
 
+export const auth = firebase.auth();
+
 export function userLogin() {
-  return firebase.auth().signInWithPopup(provider);
+  return auth.signInWithPopup(provider);
 }
 
 export function userLogout() {
-  return firebase.auth().signOut();
+  return auth.signOut();
 }
 
 export function fetchNotes(callback) {

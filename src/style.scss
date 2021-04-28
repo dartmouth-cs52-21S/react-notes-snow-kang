@@ -90,7 +90,7 @@ header {
   justify-content: flex-start;
   margin-left: 2rem;
   margin-bottom: 100px;
-  height: 750px;
+  height: 770px;
   background: $LIGHT_PINK;
   background: linear-gradient(0deg, $PINKISH-WHITE 0%, $MEDIUM_PINK 65%, rgb(231, 162, 173, 0.1) 100%);
   text-transform: uppercase;
@@ -111,6 +111,8 @@ header {
 
   input[type=text] {
     border: $LIGHT_PINK 2px solid;
+    height: 2rem;
+    width: 70%;
     &:focus-visible {
       outline: none;
     }
