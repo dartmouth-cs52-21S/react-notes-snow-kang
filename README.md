@@ -1,6 +1,6 @@
 # React-Notes
 
-*Snow's Notes*
+*Snow's Notes*: a cute way to take notes with animal toppers and lots and lots of pink :)
 
 [deployed url](https://jovial-jennings-2f0b27.netlify.app/)
 
@@ -24,3 +24,5 @@
 - When all notes have been deleted, the z-index counter is reset and the first new note will have z-index 0 again
 
 ## Screenshots
+![screen](https://user-images.githubusercontent.com/38738497/116329251-f0b20c00-a798-11eb-8fa6-02c9fcd415cf.PNG)
+
