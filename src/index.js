@@ -188,7 +188,12 @@ class App extends Component {
           <div id="online-users">
             <p>who&apos;s online:</p>
             {this.state.users.entrySeq().map(([id, user]) => (
-              <span key={id} id={id} className="online-user" style={{ backgroundColor: (id === this.state.userKey) ? identifierColor : 'null' }}>{user.displayName[0]} </span>
+              <span key={id}
+                id={id}
+                className="online-user"
+                style={{ backgroundColor: (id === this.state.userKey) ? identifierColor : 'null' }}
+              >{(user.displayName === 'anonymous') ? '?' : user.displayName[0]}
+              </span>
             ))}
           </div>
           <div id="login-process">
