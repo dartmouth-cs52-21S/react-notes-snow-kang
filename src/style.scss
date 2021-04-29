@@ -1,0 +1,344 @@
+$CONTAINER_WIDTH: 220px;
+$NOTE_WIDTH: calc(#{$CONTAINER_WIDTH} - 3rem);
+$OPTIONS_HEIGHT: 2rem;
+$PINKISH-WHITE: rgb(255, 235, 238);
+$LIGHT_PINK: rgb(255, 198, 198);
+$MEDIUM_PINK: rgb(236, 181, 189);
+$DARK_PINK: rgb(231, 162, 173);
+
+/* How to guarantee full view width w/o scrollbar width */
+$FULL_WIDTH: calc(100vw - (100vw - 100%));
+
+* {
+  margin: 0;
+  border: none;
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+}
+
+#backdrop {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: $FULL_WIDTH;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: $FULL_WIDTH;
+  height: 100vh;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  align-self: flex-end;
+}
+
+#online-users {
+  display: flex;
+  align-items: center;
+
+  > * {
+    margin-right: .5em;
+  }
+
+  p {
+    font-family: 'Parisienne', cursive;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: rgb(211, 124, 138);
+  }
+}
+
+.online-user {
+  background-color: $PINKISH-WHITE;
+  color: $DARK_PINK;
+  border: 2px solid $DARK_PINK;
+  font-size: 2em;
+  text-transform: lowercase;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+}
+
+#login-process {
+  display: flex;
+  background-color: $MEDIUM_PINK;
+  padding: 1em 2.5em;
+}
+
+#logged-in-status {
+  font-size: 1.5rem;
+  color: $PINKISH-WHITE;
+  margin-right: 1.5em;
+}
+
+#google-prompt {
+  padding: 0.5rem;
+  width: 120px;
+  cursor: pointer;
+  background-color: $PINKISH-WHITE;
+
+  &:hover {
+    background-color: white;
+    animation: pulse 2s infinite;
+  }
+}
+
+#main {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+#flowers, #logo {
+  width: 100%;
+}
+
+/* Sidebar for new note creation */ 
+.input-card {
+  display: flex;
+  flex: 0 1 10%;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: 2rem;
+  margin-bottom: 100px;
+  height: 770px;
+  background: $LIGHT_PINK;
+  background: linear-gradient(0deg, $PINKISH-WHITE 0%, $MEDIUM_PINK 65%, rgb(231, 162, 173, 0.1) 100%);
+  text-transform: uppercase;
+  color: $PINKISH-WHITE;
+
+  p:first-of-type {
+    font-family: 'Parisienne', cursive;
+    font-weight: bolder;
+    font-size: 3rem;
+    text-transform: lowercase;
+  }
+}
+
+.notes-creator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  input[type=text] {
+    height: 2rem;
+    width: 70%;
+    border: $LIGHT_PINK 2px solid;
+    height: 2rem;
+    width: 70%;
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  input[type=button] {
+    margin-top: 1rem;
+    width: 100px;
+    font-size: 1.2rem;
+    text-transform: lowercase;
+    background-color: $DARK_PINK;
+    color: $PINKISH-WHITE;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $MEDIUM_PINK;
+      width: 120px;
+      transition: all ease 0.2s;
+    }
+  }
+}
+
+.animal-headers {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+/* Animal topper selection for note creation */
+// Accessibility friendly way to hide radio button
+input[type=radio] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+
+  + img {
+    cursor: pointer;
+    height: 70px;
+    padding: 1rem;
+    border-radius: 1rem;
+
+    &:hover {
+      background: $DARK_PINK;
+      animation: bounce 2s infinite;
+    }
+  }
+}
+
+input[type=radio]:checked + img {
+  background: $DARK_PINK;
+}
+
+#notes-boundary {
+  position: relative;
+  width: 100%;
+  padding: 0.5rem 2rem;
+}
+
+/* Note animal container */
+.note.react-draggable {
+  position: absolute;
+  word-wrap: break-word;
+  width: $CONTAINER_WIDTH;
+
+  .animal-header {
+    display: flex;
+
+    img {
+      max-width: $CONTAINER_WIDTH;
+      max-height: calc(#{$CONTAINER_WIDTH} * 0.8);
+    }
+
+    &:hover {
+      cursor: move;
+    }
+  }
+}
+
+/* Note body container -between the animal header and the author footer */
+.note-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  textarea {
+    font-size: 1.2rem;
+    height: $NOTE_WIDTH;
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:first-child {
+      resize: none;
+    }
+
+    &:nth-child(2) {
+      resize: vertical;
+    }
+  }
+
+  .note-title {
+    text-align: center;
+    width: $CONTAINER_WIDTH;
+    min-height: 1.5rem;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    margin: 1rem;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .note-text {
+    min-height: 3rem;
+    width: $NOTE_WIDTH;
+    padding: 0.5rem;
+    text-align: left;
+    overflow-x: hidden;
+    overflow-y: auto;
+    cursor: text;
+
+    * {
+      max-width: calc(#{$NOTE_WIDTH} - 1rem);
+    }
+  }
+}
+
+/* Sideways options bar */
+.rotate {
+  transform: rotate(90deg) translateX(-1rem) translateY(-.5rem); 
+  transform-origin: bottom right;
+}
+
+#display-toggle {
+  position: absolute;
+  top: 0;
+  font-size: 3rem;
+  color: rgb(192, 40, 66);
+  left: calc(#{$CONTAINER_WIDTH} / 2.7);
+  
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.options {
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: $NOTE_WIDTH;
+  height: $OPTIONS_HEIGHT;
+  margin-left: calc(#{$CONTAINER_WIDTH} - #{$NOTE_WIDTH});
+
+  i {
+    padding: .2rem .5rem ;
+    font-size: 2rem;
+    background-color: $LIGHT_PINK;
+    margin: .3rem;
+    border: solid 1px black;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $PINKISH-WHITE;
+    }
+  }
+}
+
+/* Icons to change animal header */
+.animal-icon {
+  height: 3rem;
+  width: 3rem;
+  display: block;
+
+  &:hover {
+    cursor: pointer;
+    animation: bounce 2s;
+  }
+}
+
+/* Author footer */
+.note-author {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: $CONTAINER_WIDTH;
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  font-style: italic;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1) };
+  100% { transform: scale(1); }
+}
+
+/* Boucne animation from https://codepen.io/webmantras/pen/azWJOB */
+@keyframes bounce {
+	0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+	40% {transform: translateY(-1em);}
+	60% {transform: translateY(-0.5em);}
+}
