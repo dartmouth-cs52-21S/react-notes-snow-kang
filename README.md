@@ -20,10 +20,14 @@
 - Text body autoresizes to fit to text on display. While editing, text body expands and is resizable via the bottom right corner. Markdown is supported
 - Google authentication with "created by" portion in each note. When you are not logged in, your posts are signed as anonymous
 - Online users in header with the first letter of each user currently on site
+  - If you have multiple browsers open on the same computer, it recognizes that you are the same user. So if you log in on one of your open browsers, it updates the header display name and the online users bubbles for all browsers. 
+  - If you refresh, it remembers you until you log out. 
+  - Displays your current browser's online bubble in purple and all other in pink.
 - Animations on sidebar icons and animal topper images
 - When interacting with any note, it is assigned the highest z-index
 - When all notes have been deleted, the z-index counter is reset and the first new note will have z-index 0 again
 
 ## Screenshots
-![screen](https://user-images.githubusercontent.com/38738497/116329251-f0b20c00-a798-11eb-8fa6-02c9fcd415cf.PNG)
+![screen](https://user-images.githubusercontent.com/38738497/116488141-a8115600-a85f-11eb-96d8-8e3a66bd7c01.PNG)
+
 
