@@ -25,5 +25,6 @@
 - When all notes have been deleted, the z-index counter is reset and the first new note will have z-index 0 again
 
 ## Screenshots
-![screen](https://user-images.githubusercontent.com/38738497/116329251-f0b20c00-a798-11eb-8fa6-02c9fcd415cf.PNG)
+![screen](https://user-images.githubusercontent.com/38738497/116488141-a8115600-a85f-11eb-96d8-8e3a66bd7c01.PNG)
+
 
